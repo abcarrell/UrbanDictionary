@@ -1,5 +1,6 @@
 package com.acarrell.urbandictionary.viewmodel
 
+import android.view.View
 import com.acarrell.urbandictionary.model.DictionaryEntry
 import org.junit.Before
 
@@ -21,7 +22,7 @@ class EntryViewModelTest {
             thumbsDown = THUMBS_DOWN,
             permalink = PERMALINK,
             author = AUTHOR,
-            writtenOn = Date(WRITTEN_ON),
+            writtenOn = WRITTEN_ON,
             soundUrls = SOUND_URLS
         )
         viewModel = EntryViewModel(entry)
@@ -32,8 +33,19 @@ class EntryViewModelTest {
         assertEquals(viewModel.definition.get(), DEFINITION)
         assertEquals(viewModel.word.get(), WORD)
         assertEquals(viewModel.example.get(), EXAMPLE)
-        assertEquals(viewModel.thumbsUp.get(), THUMBS_UP)
-        assertEquals(viewModel.thumbsDown.get(), THUMBS_DOWN)
+        assertEquals(viewModel.thumbsUp.get(), THUMBS_UP.toString())
+        assertEquals(viewModel.thumbsDown.get(), THUMBS_DOWN.toString())
+    }
+
+    @Test
+    fun `handleItemClick SHOULD swap the visibility for the extended portion of the list item`() {
+        viewModel.itemVisibility.set(View.GONE)
+
+        viewModel.handleItemClick()
+        assertEquals(viewModel.itemVisibility.get(), View.VISIBLE)
+
+        viewModel.handleItemClick()
+        assertEquals(viewModel.itemVisibility.get(), View.GONE)
     }
 
     private companion object {
@@ -45,7 +57,7 @@ class EntryViewModelTest {
         const val THUMBS_DOWN = 427
         const val PERMALINK = "http://wat.urbanup.com/3322419"
         const val AUTHOR = "watwat"
-        val WRITTEN_ON = Date.parse("2008-09-04T00:00:00.000Z")
+        val WRITTEN_ON = Date(1220486400000)
         val SOUND_URLS = emptyList<String>()
     }
 }
