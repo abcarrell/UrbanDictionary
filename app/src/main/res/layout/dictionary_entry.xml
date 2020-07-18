@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="view_model"
+            type="com.acarrell.urbandictionary.viewmodel.EntryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> view_model.handleItemClick()}">
+
+        <TextView
+            android:id="@+id/word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{view_model.word}"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Word" />
+
+        <TextView
+            android:id="@+id/definition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{view_model.definition}"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="@+id/word"
+            app:layout_constraintTop_toBottomOf="@+id/word"
+            tools:text="This is a very long sentence intended to fill the place of the definition" />
+
+        <ImageView
+            android:id="@+id/iv_thumbs_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/thumbs_up"
+            android:src="@drawable/ic_thumbs_up"
+            android:tint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toStartOf="@+id/thumbs_up"
+            app:layout_constraintTop_toBottomOf="@+id/definition" />
+
+        <TextView
+            android:id="@+id/thumbs_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:text="@{view_model.thumbsUp}"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            app:layout_constraintEnd_toStartOf="@+id/iv_thumbs_down"
+            app:layout_constraintTop_toBottomOf="@+id/definition"
+            tools:text="555" />
+
+        <ImageView
+            android:id="@+id/iv_thumbs_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/thumbs_down"
+            android:src="@drawable/ic_thumbs_down"
+            android:tint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toStartOf="@+id/thumbs_down"
+            app:layout_constraintTop_toBottomOf="@+id/definition" />
+
+        <TextView
+            android:id="@+id/thumbs_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="@{view_model.thumbsDown}"
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/definition"
+            tools:text="555" />
+
+        <TextView
+            android:id="@+id/example_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/example_title"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:visibility="@{view_model.itemVisibility}"
+            app:layout_constraintStart_toStartOf="@+id/example"
+            app:layout_constraintTop_toBottomOf="@+id/iv_thumbs_down" />
+
+        <TextView
+            android:id="@+id/example"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{view_model.example}"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/example_title"
+            android:visibility="@{view_model.itemVisibility}"
+            tools:text="This is where the example goes" />
+
+
+        <TextView
+            android:id="@+id/more_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{view_model.moreText}"
+            app:layout_constraintTop_toBottomOf="@+id/example"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="More..." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

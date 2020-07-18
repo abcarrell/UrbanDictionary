@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UrbanDictionary</string>
+    <string name="search_hint">Search Urban Dictionary</string>
+    <string name="search">Search</string>
+    <string name="sort_by_thumbs_up">Sort by Thumbs Up</string>
+    <string name="sort_by_thumbs_down">Sort by Thumbs Down</string>
+    <string name="more_link">more...</string>
+    <string name="thumbs_down">Thumbs Down</string>
+    <string name="thumbs_up">Thumbs Up</string>
+    <string name="example_title">Example:</string>
+</resources>
