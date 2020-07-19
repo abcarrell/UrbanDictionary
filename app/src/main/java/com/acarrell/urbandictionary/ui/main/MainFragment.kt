@@ -52,7 +52,6 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.serviceController = applicationState.serviceController
-
     }
 
     override fun onResume() {
@@ -96,5 +95,6 @@ class MainFragment : Fragment() {
 
     private fun handleSortEvent(event: SortEvent) {
         viewDataBinding.sortButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), event.sortKey.iconRes))
+        viewDataBinding.entriesList.scrollToPosition(0)
     }
 }

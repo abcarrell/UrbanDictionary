@@ -11,7 +11,11 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServiceController private constructor() {
+class ServiceController private constructor(
+    private val apiHost: String,
+    private val apiKey: String,
+    private val baseUrl: String
+) {
     private val udService: UDService
     fun getDefinitions(term: String): Single<List<DictionaryEntry>> {
         return udService.getDefinitions(term)
@@ -26,8 +30,8 @@ class ServiceController private constructor() {
 
         val clientInterceptor = Interceptor {
             val request = it.request().newBuilder()
-                .addHeader("X-RapidAPI-Host", "mashape-community-urban-dictionary.p.rapidapi.com")
-                .addHeader("X-RapidAPI-Key", "502392b060msh11f0d8714789cdcp1e60a6jsnbc26ba74ee55")
+                .addHeader(API_HOST_NAME, apiHost)
+                .addHeader(API_KEY_NAME, apiKey)
                 .build()
             it.proceed(request)
         }
@@ -40,7 +44,7 @@ class ServiceController private constructor() {
 
     init {
         udService = Retrofit.Builder()
-            .baseUrl("https://mashape-community-urban-dictionary.p.rapidapi.com/")
+            .baseUrl(baseUrl)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(getClient())
@@ -49,9 +53,12 @@ class ServiceController private constructor() {
     }
 
     companion object {
+        private const val API_HOST_NAME = "X-RapidAPI-Host"
+        private const val API_KEY_NAME = "X-RapidAPI-Key"
+
         @JvmStatic
-        fun create(): ServiceController {
-            return ServiceController()
+        fun create(apiHost: String, apiKey: String, baseUrl: String): ServiceController {
+            return ServiceController(apiHost, apiKey, baseUrl)
         }
     }
 }

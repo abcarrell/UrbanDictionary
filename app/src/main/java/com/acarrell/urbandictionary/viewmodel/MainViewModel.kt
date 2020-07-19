@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
 
 class MainViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    val eventBus = PublishRelay.create<Event>()
+    val eventBus: PublishRelay<Event> = PublishRelay.create<Event>()
 
     var searchText: String? = null
     private var sortKey: DictionaryAdapter.SortKey = DictionaryAdapter.SortKey.ThumbsUp
@@ -22,7 +22,6 @@ class MainViewModel : ViewModel() {
 
     val data: MutableList<DictionaryEntry> = ArrayList()
     val adapter = DictionaryAdapter(data)
-
     var serviceController: ServiceController? = null
 
     fun search() {
@@ -34,7 +33,7 @@ class MainViewModel : ViewModel() {
                     updateData(entries)
                     showProgress = false
                 }, {
-                    eventBus.accept(ToastEvent(it.message))
+                    send(ToastEvent(it.message))
                     showProgress = false
                 })
             }
@@ -53,7 +52,7 @@ class MainViewModel : ViewModel() {
                     DictionaryAdapter.SortKey.ThumbsUp
                 }
             }
-            eventBus.accept(SortEvent(sortKey))
+            send(SortEvent(sortKey))
         }
     }
 
@@ -62,7 +61,7 @@ class MainViewModel : ViewModel() {
         data.addAll(entries)
         sortEntries()
         adapter.notifyDataSetChanged()
-        eventBus.accept(UpdateEvent())
+        send(UpdateEvent())
     }
 
     fun addDisposable(disposable: Disposable) {
@@ -79,5 +78,9 @@ class MainViewModel : ViewModel() {
 
     fun destroy() {
         clearDisposables()
+    }
+
+    private fun send(event: Event) {
+        eventBus.accept(event)
     }
 }

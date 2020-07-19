@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="x_rapidapi_host">mashape-community-urban-dictionary.p.rapidapi.com</string>
+    <string name="x_rapidapi_key">502392b060msh11f0d8714789cdcp1e60a6jsnbc26ba74ee55</string>
+    <string name="api_base_url">https://mashape-community-urban-dictionary.p.rapidapi.com/</string>
+</resources>
