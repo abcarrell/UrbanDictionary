@@ -1,7 +1,6 @@
 package com.acarrell.urbandictionary.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.acarrell.urbandictionary.R
 import com.acarrell.urbandictionary.adapter.DictionaryAdapter
 import com.acarrell.urbandictionary.events.Event
 import com.acarrell.urbandictionary.events.SortEvent

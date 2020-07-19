@@ -1,6 +1,5 @@
 package com.acarrell.urbandictionary.service
 
-import com.acarrell.urbandictionary.model.DictionaryEntry
 import com.acarrell.urbandictionary.model.UDResponse
 import io.reactivex.Single
 import retrofit2.http.GET

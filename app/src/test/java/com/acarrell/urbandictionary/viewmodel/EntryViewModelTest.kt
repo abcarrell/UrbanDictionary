@@ -2,9 +2,8 @@ package com.acarrell.urbandictionary.viewmodel
 
 import android.view.View
 import com.acarrell.urbandictionary.model.DictionaryEntry
+import org.junit.Assert.assertEquals
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
 

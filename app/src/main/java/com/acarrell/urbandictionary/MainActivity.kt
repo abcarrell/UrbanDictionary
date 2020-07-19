@@ -1,7 +1,7 @@
 package com.acarrell.urbandictionary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.acarrell.urbandictionary.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {

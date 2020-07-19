@@ -1,34 +1,28 @@
 package com.acarrell.urbandictionary.ui.main
 
 import android.app.Activity
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.acarrell.urbandictionary.BR
 import com.acarrell.urbandictionary.R
-import com.acarrell.urbandictionary.adapter.DictionaryAdapter
 import com.acarrell.urbandictionary.application.UDApplication
 import com.acarrell.urbandictionary.databinding.MainFragmentBinding
-import com.acarrell.urbandictionary.events.Event
 import com.acarrell.urbandictionary.events.SortEvent
 import com.acarrell.urbandictionary.events.ToastEvent
 import com.acarrell.urbandictionary.events.UpdateEvent
 import com.acarrell.urbandictionary.viewmodel.MainViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.dictionary_entry.*
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
@@ -38,14 +32,15 @@ class MainFragment : Fragment() {
     }
     private lateinit var applicationState: UDApplication
     private lateinit var viewModel: MainViewModel
-    private var compositeDisposable: CompositeDisposable? = null
+    private val compositeDisposable: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
     private lateinit var viewDataBinding: MainFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        applicationState = (requireActivity().application) as UDApplication
-        @Suppress("DEPRECATION")
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        applicationState = UDApplication.get(requireContext())
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.main_fragment, this.main, false, DataBindingUtil.getDefaultComponent())
         viewDataBinding.viewModel = viewModel
         viewDataBinding.entriesList.apply {
@@ -56,15 +51,14 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.serviceController = applicationState.getServiceController()
+        viewModel.serviceController = applicationState.serviceController
 
     }
 
     override fun onResume() {
         super.onResume()
         viewDataBinding.entriesList.adapter = viewModel.adapter
-        compositeDisposable = CompositeDisposable()
-        compositeDisposable!!.add(
+        compositeDisposable.add(
             viewModel.eventBus.subscribe {
                 when (it) {
                     is ToastEvent -> handleToastEvent(it)
@@ -84,7 +78,7 @@ class MainFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         viewModel.destroy()
-        compositeDisposable?.apply {
+        compositeDisposable.apply {
             clear()
             dispose()
         }

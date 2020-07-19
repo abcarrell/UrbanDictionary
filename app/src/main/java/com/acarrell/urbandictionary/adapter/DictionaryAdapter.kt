@@ -10,7 +10,6 @@ import com.acarrell.urbandictionary.R
 import com.acarrell.urbandictionary.databinding.DictionaryEntryBinding
 import com.acarrell.urbandictionary.model.DictionaryEntry
 import com.acarrell.urbandictionary.viewmodel.EntryViewModel
-import com.acarrell.urbandictionary.viewmodel.MainViewModel
 
 class DictionaryAdapter(private val data: MutableList<DictionaryEntry>) : RecyclerView.Adapter<DictionaryAdapter.EntryViewHolder>() {
 
