@@ -10,10 +10,14 @@ import com.acarrell.urbandictionary.service.ServiceController
 class UDApplication : Application() {
     val serviceController by lazy {
         ServiceController.create(
+            this,
             resources.getString(R.string.x_rapidapi_host),
             resources.getString(R.string.x_rapidapi_key),
             resources.getString(R.string.api_base_url)
         )
+    }
+    val resourceProvider by lazy {
+        ResourceProvider.from(this.applicationContext)
     }
 
     override fun onCreate() {

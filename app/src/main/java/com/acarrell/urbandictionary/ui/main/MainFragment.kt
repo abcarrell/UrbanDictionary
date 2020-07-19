@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acarrell.urbandictionary.BR
 import com.acarrell.urbandictionary.R
+import com.acarrell.urbandictionary.application.MainViewModelFactory
+import com.acarrell.urbandictionary.application.ResourceProvider
 import com.acarrell.urbandictionary.application.UDApplication
 import com.acarrell.urbandictionary.databinding.MainFragmentBinding
 import com.acarrell.urbandictionary.events.SortEvent
@@ -40,7 +42,8 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         applicationState = UDApplication.get(requireContext())
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(applicationState)).get(MainViewModel::class.java)
+        viewModel.resourceProvider = ResourceProvider.from(requireContext())
         viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.main_fragment, this.main, false, DataBindingUtil.getDefaultComponent())
         viewDataBinding.viewModel = viewModel
         viewDataBinding.entriesList.apply {
@@ -51,7 +54,6 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.serviceController = applicationState.serviceController
     }
 
     override fun onResume() {
